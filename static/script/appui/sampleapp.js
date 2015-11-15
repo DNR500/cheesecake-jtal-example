@@ -25,9 +25,11 @@
 require.def('sampleapp/appui/sampleapp',
     [
         'antie/application',
-        'antie/widgets/container'
+        'antie/widgets/container',
+        'cheesecake/cheesecakefactory',
+        'jtal/jtaladapter'
     ],
-    function(Application, Container) {
+    function(Application, Container, cheesecake, jtalAdapter) {
     
         return Application.extend({
             init: function(appDiv, styleDir, imgDir, callback) {
@@ -35,6 +37,9 @@ require.def('sampleapp/appui/sampleapp',
                 self = this;
                 
                 self._super(appDiv, styleDir, imgDir, callback);
+
+                this.cheesecake = cheesecake;
+                jtalAdapter.configureFactory(this.cheesecake);
 
                 // Sets the root widget of the application to be
                 // an empty container

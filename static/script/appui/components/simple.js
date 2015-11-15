@@ -24,6 +24,7 @@
 
 require.def("sampleapp/appui/components/simple",
     [
+        "antie/application",
         "antie/widgets/component",
         "antie/widgets/button",
         "antie/widgets/label",
@@ -33,7 +34,7 @@ require.def("sampleapp/appui/components/simple",
         "sampleapp/appui/formatters/simpleformatter",
         "sampleapp/appui/datasources/simplefeed"
     ],
-    function (Component, Button, Label, VerticalList, Carousel, DataSource, SimpleFormatter, SimpleFeed) {
+    function (Application, Component, Button, Label, VerticalList, Carousel, DataSource, SimpleFormatter, SimpleFeed) {
 
         // All components extend Component
         return Component.extend({
@@ -44,8 +45,19 @@ require.def("sampleapp/appui/components/simple",
                 // It is important to call the constructor of the superclass
                 this._super("simplecomponent");
 
+                var cheesecake = Application.getCurrentApplication().cheesecake;
+                var labelJSON = {
+                    "cheesecake":
+                    {
+                        "id": "helloWorldLabel",
+                        "recipeName": "label",
+                        "text": "Hello World"
+                    }
+                };
+
+                helloWorldLabel = cheesecake.createCheeseCake(labelJSON);
+
                 // Add the labels to the component
-                helloWorldLabel = new Label("helloWorldLabel", "Hello World");
                 this.appendChildWidget(helloWorldLabel);
 
                 welcomeLabel = new Label("welcomeLabel", "Welcome to your first TAL application!");
@@ -71,6 +83,41 @@ require.def("sampleapp/appui/components/simple",
                 verticalListMenu.appendChildWidget(playerButton);
                 verticalListMenu.appendChildWidget(horizontalProgressButton);
                 this.appendChildWidget(verticalListMenu);
+
+                var menuJSON = {
+                    cheesecake: {
+                        id: "mainMenuList", recipeName: "verticallist",
+                        children: [
+                            {
+                                recipeName:"textbutton",
+                                text:"Carousel Example",
+                                actions: [
+                                    {
+                                        "eventType": "select", "command": "launchCarouselExample"
+                                    }
+                                ]
+                            },
+                            {
+                                recipeName:"textbutton",
+                                text:"Simple Video Player Example",
+                                actions: [
+                                    {
+                                        "eventType": "select", "command": "launchSimpleVideoExample"
+                                    }
+                                ]
+                            },
+                            {
+                                recipeName:"textbutton",
+                                text:"Horizontal Progress Bar Example",
+                                actions: [
+                                    {
+                                        "eventType": "select", "command": "launchHorizontalProgressExample"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                };
 
                 // Add a 'beforerender' event listener to the component to do anything specific that might need to be done
                 // before rendering the component

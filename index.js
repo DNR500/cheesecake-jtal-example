@@ -108,6 +108,8 @@ function returnResponse(url, response)
 				response.write("baseUrl: '',");
 				response.write("paths: {");
 					response.write(application_id + ": 'static/script',");
+					response.write("jtal : 'bower_components/jtal/build/uncompressed/adapters/jtal',");
+					response.write("cheesecake : 'bower_components/cheesecake/build/uncompressed/cheesecake',");
 					response.write("antie : 'antie/static/script'");
 				response.write("},");
 				response.write("priority: [],");
