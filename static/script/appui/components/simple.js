@@ -46,78 +46,60 @@ require.def("sampleapp/appui/components/simple",
                 this._super("simplecomponent");
 
                 var cheesecake = Application.getCurrentApplication().cheesecake;
-                var labelJSON = {
-                    "cheesecake":
-                    {
-                        "id": "helloWorldLabel",
-                        "recipeName": "label",
-                        "text": "Hello World"
-                    }
-                };
 
-                helloWorldLabel = cheesecake.createCheeseCake(labelJSON);
-
-                // Add the labels to the component
-                this.appendChildWidget(helloWorldLabel);
-
-                welcomeLabel = new Label("welcomeLabel", "Welcome to your first TAL application!");
-                this.appendChildWidget(welcomeLabel);
-
-                var newCarouselButton = this._createCarouselButton();
-
-                var playerButton = new Button();
-                playerButton.addEventListener("select", function(evt){
-                    self.getCurrentApplication().pushComponent("maincontainer", "sampleapp/appui/components/simplevideocomponent");
-                });
-                playerButton.appendChildWidget(new Label("Simple Video Player Example"));
-
-                var horizontalProgressButton = new Button();
-                horizontalProgressButton.appendChildWidget(new Label("Horizontal Progress Bar Example"));
-                horizontalProgressButton.addEventListener("select", function(evt) {
-                    self.getCurrentApplication().pushComponent("maincontainer", "sampleapp/appui/components/horizontalprogresscomponent");
+                cheesecake.addAction("launchCarouselExample", function(parameters) {
+                    return function(){
+                        self.getCurrentApplication().pushComponent("maincontainer", "sampleapp/appui/components/carouselcomponent", self._getCarouselConfig());
+                    };
                 });
 
-                // Create a vertical list and append the buttons to navigate within the list
-                verticalListMenu = new VerticalList("mainMenuList");
-                verticalListMenu.appendChildWidget(newCarouselButton);
-                verticalListMenu.appendChildWidget(playerButton);
-                verticalListMenu.appendChildWidget(horizontalProgressButton);
-                this.appendChildWidget(verticalListMenu);
+                cheesecake.addAction("launchSimpleVideoExample", function(parameters) {
+                    return function(){
+                        self.getCurrentApplication().pushComponent("maincontainer", "sampleapp/appui/components/simplevideocomponent");
+                    };
+                });
+
+                cheesecake.addAction("launchHorizontalProgressExample", function(parameters) {
+                    return function(){
+                        self.getCurrentApplication().pushComponent("maincontainer", "sampleapp/appui/components/horizontalprogresscomponent");
+                    };
+                });
 
                 var menuJSON = {
                     cheesecake: {
-                        id: "mainMenuList", recipeName: "verticallist",
+                        recipeName: "container",
                         children: [
+                            {   id: "helloWorldLabel", recipeName: "label", text: "Hello World" },
+                            {   id: "welcomeLabel", recipeName: "label", text: "Welcome to your first TAL application!"},
                             {
-                                recipeName:"textbutton",
-                                text:"Carousel Example",
-                                actions: [
+                                id: "mainMenuList", recipeName: "verticallist",
+                                children: [
                                     {
-                                        "eventType": "select", "command": "launchCarouselExample"
-                                    }
-                                ]
-                            },
-                            {
-                                recipeName:"textbutton",
-                                text:"Simple Video Player Example",
-                                actions: [
+                                        recipeName:"textbutton", text:"Carousel Example",
+                                        actions: [
+                                            { eventType: "select", command: "launchCarouselExample" }
+                                        ]
+                                    },
                                     {
-                                        "eventType": "select", "command": "launchSimpleVideoExample"
-                                    }
-                                ]
-                            },
-                            {
-                                recipeName:"textbutton",
-                                text:"Horizontal Progress Bar Example",
-                                actions: [
+                                        recipeName:"textbutton", text:"Simple Video Player Example",
+                                        actions: [
+                                            { eventType: "select", command: "launchSimpleVideoExample" }
+                                        ]
+                                    },
                                     {
-                                        "eventType": "select", "command": "launchHorizontalProgressExample"
+                                        recipeName:"textbutton", text:"Horizontal Progress Bar Example",
+                                        actions: [
+                                            { eventType: "select", command: "launchHorizontalProgressExample" }
+                                        ]
                                     }
                                 ]
                             }
                         ]
                     }
                 };
+
+                var menu = cheesecake.createCheeseCake(menuJSON);
+                this.appendChildWidget(menu);
 
                 // Add a 'beforerender' event listener to the component to do anything specific that might need to be done
                 // before rendering the component
@@ -131,22 +113,6 @@ require.def("sampleapp/appui/components/simple",
                     self.getCurrentApplication().ready();
                     self.removeEventListener('aftershow', appReady);
                 });
-            },
-
-            _createCarouselButton: function () {
-                var self = this;
-                function carouselExampleSelected() {
-                    self.getCurrentApplication().pushComponent(
-                        "maincontainer",
-                        "sampleapp/appui/components/carouselcomponent",
-                        self._getCarouselConfig()
-                    );
-                }
-
-                var button = new Button('carouselButton');
-                button.appendChildWidget(new Label("Carousel Example"));
-                button.addEventListener('select', carouselExampleSelected);
-                return button;
             },
 
             _getCarouselConfig: function () {
