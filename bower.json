@@ -1,0 +1,13 @@
+{
+  "name": "cheesecake-jtal-example",
+  "main": "index.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/DNR500/cheesecake-jtal-example",
+  "authors": [
+    "Nathan Richards <nathan.richards@bbc.co.uk>"
+  ],
+  "description": "Example application for the Cheesecake, jTal and Tal framwork.",
+  "dependencies": {
+    "jtal": "~0.0.3"
+  }
+}

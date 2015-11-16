@@ -1,8 +1,8 @@
 {
-  "name": "talexample",
+  "name": "cheesecake-jtal-example",
   "private": true,
   "version": "0.1.0",
-  "description": "Example application for the TAL framwork.",
+  "description": "Example application for the Cheesecake, jTal and Tal framwork.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
