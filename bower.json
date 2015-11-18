@@ -8,6 +8,6 @@
   ],
   "description": "Example application for the Cheesecake, jTal and Tal framwork.",
   "dependencies": {
-    "jtal": "~0.0.3"
+    "jtal": "~0.0.5"
   }
 }

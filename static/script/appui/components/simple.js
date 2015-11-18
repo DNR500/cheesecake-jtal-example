@@ -45,26 +45,6 @@ require.def("sampleapp/appui/components/simple",
                 // It is important to call the constructor of the superclass
                 this._super("simplecomponent");
 
-                var cheesecake = Application.getCurrentApplication().cheesecake;
-
-                cheesecake.addAction("launchCarouselExample", function(parameters) {
-                    return function(){
-                        self.getCurrentApplication().pushComponent("maincontainer", "sampleapp/appui/components/carouselcomponent", self._getCarouselConfig());
-                    };
-                });
-
-                cheesecake.addAction("launchSimpleVideoExample", function(parameters) {
-                    return function(){
-                        self.getCurrentApplication().pushComponent("maincontainer", "sampleapp/appui/components/simplevideocomponent");
-                    };
-                });
-
-                cheesecake.addAction("launchHorizontalProgressExample", function(parameters) {
-                    return function(){
-                        self.getCurrentApplication().pushComponent("maincontainer", "sampleapp/appui/components/horizontalprogresscomponent");
-                    };
-                });
-
                 var menuJSON = {
                     cheesecake: {
                         recipeName: "container",
@@ -76,21 +56,31 @@ require.def("sampleapp/appui/components/simple",
                                 children: [
                                     {
                                         recipeName:"textbutton", text:"Carousel Example",
-                                        actions: [
-                                            { eventType: "select", command: "launchCarouselExample" }
-                                        ]
+                                        actions: [ {
+                                            "eventType": "select", "command": "pushComponent",
+                                            "parameters": {
+                                                "id":"maincontainer", "modules":"sampleapp/appui/components/carouselcomponent",
+                                                "args": this._getCarouselConfig()
+                                            }
+                                        }]
                                     },
                                     {
                                         recipeName:"textbutton", text:"Simple Video Player Example",
-                                        actions: [
-                                            { eventType: "select", command: "launchSimpleVideoExample" }
-                                        ]
+                                        actions: [ {
+                                            "eventType": "select", "command": "pushComponent",
+                                            "parameters": {
+                                                "id":"maincontainer", "modules":"sampleapp/appui/components/simplevideocomponent"
+                                            }
+                                        }]
                                     },
                                     {
                                         recipeName:"textbutton", text:"Horizontal Progress Bar Example",
-                                        actions: [
-                                            { eventType: "select", command: "launchHorizontalProgressExample" }
-                                        ]
+                                        actions: [ {
+                                            "eventType": "select", "command": "pushComponent",
+                                            "parameters": {
+                                                "id":"maincontainer", "modules":"sampleapp/appui/components/horizontalprogresscomponent"
+                                            }
+                                        }]
                                     }
                                 ]
                             }
@@ -98,6 +88,7 @@ require.def("sampleapp/appui/components/simple",
                     }
                 };
 
+                var cheesecake = Application.getCurrentApplication().cheesecake;
                 var menu = cheesecake.createCheeseCake(menuJSON);
                 this.appendChildWidget(menu);
 
