@@ -14,7 +14,7 @@ node index.js
 
 You should then be able to open the project in a browser at http://127.0.0.1:1337/
 
-## Comparison jTAl and TAL
+## Comparison jTAL and TAL
 For a direct comparison of to TAL compare the following two files
 
 **TAL version** - [static/script/appui/components/simple.js](https://github.com/fmtvp/talexample/blob/master/static/script/appui/components/simple.js)
